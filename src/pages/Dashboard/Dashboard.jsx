@@ -11,6 +11,7 @@ import {
   ShoppingCart,
   BarChart3,
   Users,
+  User2,
 } from "lucide-react";
 import {
   PieChart,
@@ -24,6 +25,8 @@ import {
   XAxis,
   YAxis,
   CartesianGrid,
+  AreaChart,
+  Area,
 } from "recharts";
 import LaporanKeuangan from "../LaporanKeuangan/LaporanKeuangan";
 
@@ -34,6 +37,8 @@ const Dashboard = ({ url }) => {
   const [startDate, setStartDate] = useState("");
   const [endDate, setEndDate] = useState("");
   const [pemasukan, setPemasukan] = useState([]);
+  const [pengeluaran, setPengeluaran] = useState([]);
+  const [bahanBaku, setBahanBaku] = useState([]);
   const [filtered, setFiltered] = useState([]);
   const [topProducts, setTopProducts] = useState([]);
   const [notifications, setNotifications] = useState([]);
@@ -44,21 +49,34 @@ const Dashboard = ({ url }) => {
   const [genderData, setGenderData] = useState([]);
   const navigate = useNavigate();
   const [jumlahMember, setJumlahMember] = useState(0);
+  const [jumlahUser, setJumlahUser] = useState(0);
+
+  const fetchJumlahUser = async (id) => {
+    try {
+      const res = await fetch(`${url}/api/user/user`);
+      const data = await res.json();
+      if (data.success) {
+        setJumlahUser(data.data.length);
+      }
+    } catch (error) {
+      console.error("Gagal mengambil jumlah user", error);
+    }
+  };
 
   const totalProduk = items.filter((item) => item.namaProduk).length;
-  const totalBahan = items.filter((item) => item.namaBarang).length;
+  const totalBahan = items.filter((item) => item.nama).length;
 
   const fetchJumlahMember = async () => {
-  try {
-    const res = await fetch(`${url}/api/pelanggan/daftar`);
-    const data = await res.json();
-    if (data.success) {
-      setJumlahMember(data.data.length);
+    try {
+      const res = await fetch(`${url}/api/pelanggan/daftar`);
+      const data = await res.json();
+      if (data.success) {
+        setJumlahMember(data.data.length);
+      }
+    } catch (error) {
+      console.error("Gagal mengambil jumlah member", error);
     }
-  } catch (error) {
-    console.error("Gagal mengambil jumlah member", error);
-  }
-};
+  };
 
   const fetchCheckoutData = async () => {
     try {
@@ -68,8 +86,6 @@ const Dashboard = ({ url }) => {
 
         const filteredData = allData.filter((item) => {
           const tanggal = new Date(item.waktuTransaksi);
-          // console.log("Transaksi:", item.waktuTransaksi, "| Tanggal:", tanggal);
-
           const matchMonth =
             selectedMonth === "" ||
             tanggal.getMonth() + 1 === Number(selectedMonth);
@@ -84,6 +100,28 @@ const Dashboard = ({ url }) => {
     } catch (err) {
       console.error("Gagal ambil data checkout", err);
       toast.error("Gagal ambil data checkout!");
+    }
+  };
+
+  const fetchPengeluaranData = async () => {
+    try {
+      const res = await axios.get(`${url}/api/pengeluaran/daftarPengeluaran`);
+      if (res.data.success) {
+        setPengeluaran(res.data.data);
+      }
+    } catch (err) {
+      console.error("Gagal ambil data pengeluaran", err);
+    }
+  };
+
+  const fetchBahanBakuData = async () => {
+    try {
+      const res = await axios.get(`${url}/api/bahanBaku/daftarBahanBaku`);
+      if (res.data.success) {
+        setBahanBaku(res.data.data);
+      }
+    } catch (err) {
+      console.error("Gagal ambil data bahan baku", err);
     }
   };
 
@@ -126,54 +164,122 @@ const Dashboard = ({ url }) => {
     }
   };
 
-const filterData = useCallback(() => {
-  let data = [...pemasukan];
+  const filterData = useCallback(() => {
+    let data = [...pemasukan];
 
-  if (search.trim()) {
-    data = data.filter((item) =>
-      item.cartItems.some((ci) =>
-        ci.namaProduk.toLowerCase().includes(search.toLowerCase())
-      )
-    );
-  }
+    if (search.trim()) {
+      data = data.filter((item) =>
+        item.cartItems.some((ci) =>
+          ci.namaProduk.toLowerCase().includes(search.toLowerCase())
+        )
+      );
+    }
 
-  if (startDate) {
-    data = data.filter(
-      (item) => new Date(item.createdAt) >= new Date(startDate)
-    );
-  }
+    if (startDate) {
+      data = data.filter(
+        (item) => new Date(item.createdAt) >= new Date(startDate)
+      );
+    }
 
-  if (endDate) {
-    data = data.filter(
-      (item) => new Date(item.createdAt) <= new Date(endDate)
-    );
-  }
+    if (endDate) {
+      data = data.filter(
+        (item) => new Date(item.createdAt) <= new Date(endDate)
+      );
+    }
 
-  if (filterMetode) {
-    data = data.filter((item) => item.paymentMethod === filterMetode);
-  }
+    if (filterMetode) {
+      data = data.filter((item) => item.paymentMethod === filterMetode);
+    }
 
-  // 🔥 Tambahkan filter berdasarkan bulan dan tahun
-  if (selectedMonth || selectedYear) {
-    data = data.filter((item) => {
-      const tanggal = new Date(item.waktuTransaksi);
-      const matchMonth =
-        selectedMonth === "" ||
-        tanggal.getMonth() + 1 === Number(selectedMonth);
-      const matchYear =
-        selectedYear === "" ||
-        tanggal.getFullYear() === Number(selectedYear);
-      return matchMonth && matchYear;
+    if (selectedMonth || selectedYear) {
+      data = data.filter((item) => {
+        const tanggal = new Date(item.waktuTransaksi);
+        const matchMonth =
+          selectedMonth === "" ||
+          tanggal.getMonth() + 1 === Number(selectedMonth);
+        const matchYear =
+          selectedYear === "" || tanggal.getFullYear() === Number(selectedYear);
+        return matchMonth && matchYear;
+      });
+    }
+
+    setFiltered(data);
+  }, [
+    search,
+    startDate,
+    endDate,
+    filterMetode,
+    selectedMonth,
+    selectedYear,
+    pemasukan,
+  ]);
+
+  // Fungsi untuk mengelompokkan data berdasarkan bulan
+  const groupByMonth = (data, type) => {
+    const result = {};
+    data.forEach((item) => {
+      const date = new Date(item.createdAt || item.tanggal);
+      const monthYear = `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}`;
+      const amount =
+        type === "pemasukan"
+          ? Number(item.total) || 0
+          : Number(item.jumlah) || 0;
+      result[monthYear] = (result[monthYear] || 0) + amount;
     });
-  }
+    return result;
+  };
 
-  setFiltered(data);
-}, [search, startDate, endDate, filterMetode, selectedMonth, selectedYear, pemasukan]);
+  // Fungsi untuk mengelompokkan pengeluaran bulanan (termasuk bahan baku)
+  const groupPengeluaranBulanan = () => {
+    const result = {};
 
+    // Tambahkan pengeluaran biasa
+    pengeluaran.forEach((item) => {
+      const date = new Date(item.createdAt || item.tanggal);
+      const monthYear = `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}`;
+      result[monthYear] = (result[monthYear] || 0) + (Number(item.jumlah) || 0);
+    });
+
+    // Tambahkan pengeluaran bahan baku
+    bahanBaku.forEach((item) => {
+      const date = new Date(item.createdAt || item.tanggal);
+      const monthYear = `${date.getFullYear()}-${(date.getMonth() + 1)
+        .toString()
+        .padStart(2, "0")}`;
+      const nilai = (Number(item.hargaBeli) || 0) * (Number(item.jumlah) || 0);
+      result[monthYear] = (result[monthYear] || 0) + nilai;
+    });
+
+    return result;
+  };
+
+  // Data untuk chart perbandingan bulanan
+  const pemasukanBulanan = groupByMonth(pemasukan, "pemasukan");
+  const pengeluaranBulanan = groupPengeluaranBulanan();
+
+  const chartData = Array.from(
+    new Set([
+      ...Object.keys(pemasukanBulanan),
+      ...Object.keys(pengeluaranBulanan),
+    ])
+  )
+    .sort()
+    .map((key) => ({
+      bulan: key,
+      pemasukan: pemasukanBulanan[key] || 0,
+      pengeluaran: pengeluaranBulanan[key] || 0,
+    }));
 
   useEffect(() => {
     fetchList();
-      fetchJumlahMember(); 
+    fetchJumlahUser();
+    fetchJumlahMember();
+    fetchPengeluaranData();
+    fetchBahanBakuData();
   }, []);
 
   useEffect(() => {
@@ -185,7 +291,6 @@ const filterData = useCallback(() => {
   }, [filterData]);
 
   useEffect(() => {
-    // Hitung ulang data saat `filtered` berubah
     const genderMap = { Pria: 0, Wanita: 0 };
     const produkMap = {};
 
@@ -214,7 +319,6 @@ const filterData = useCallback(() => {
 
     setGenderData(genderDataFinal);
     setTopProducts(topProductsFinal);
-    // console.log("Filtered data", filtered);
   }, [filtered]);
 
   const handleNotificationClick = (notification) => {
@@ -304,18 +408,17 @@ const filterData = useCallback(() => {
                   color: "from-blue-500 to-blue-600",
                 },
                 {
-                  title: "Total Bahan",
-                  value: totalBahan.toLocaleString(),
-                  icon: ShoppingCart,
-                  color: "from-pink-500 to-pink-600",
+                  title: "Total User",
+                  value: jumlahUser.toLocaleString(), // <-- Tambah ini
+                  icon: User2, // Gunakan icon Users
+                  color: "from-purple-500 to-purple-600",
                 },
                 {
-  title: "Total Member",
-  value: jumlahMember.toLocaleString(),
-  icon: Users, // ← butuh icon
-  color: "from-green-500 to-green-600",
-}
-
+                  title: "Total Member",
+                  value: jumlahMember.toLocaleString(),
+                  icon: Users,
+                  color: "from-green-500 to-green-600",
+                },
               ].map((stat, index) => (
                 <div
                   key={index}
@@ -340,49 +443,8 @@ const filterData = useCallback(() => {
               ))}
             </div>
 
-            {/* Charts Section */}
-            <div className="mb-6 flex flex-col sm:flex-row sm:items-center sm:space-x-4">
-              {/* <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Pilih Bulan:
-                </label>
-                <select
-                  value={selectedMonth}
-                  onChange={(e) => setSelectedMonth(e.target.value)}
-                  className="border rounded px-4 py-2"
-                >
-                  <option value="">Semua Bulan</option>
-                  {Array.from({ length: 12 }, (_, i) => (
-                    <option key={i} value={i + 1}>
-                      {new Date(0, i).toLocaleString("id-ID", {
-                        month: "long",
-                      })}
-                    </option>
-                  ))}
-                </select>
-              </div>
-              <div>
-                <label className="block text-sm font-semibold mb-1">
-                  Pilih Tahun:
-                </label>
-                <select
-                  value={selectedYear}
-                  onChange={(e) => setSelectedYear(Number(e.target.value))}
-                  className="border rounded px-4 py-2"
-                >
-                  {Array.from({ length: 5 }, (_, i) => {
-                    const year = new Date().getFullYear() - i;
-                    return (
-                      <option key={year} value={year}>
-                        {year}
-                      </option>
-                    );
-                  })}
-                </select>
-              </div> */}
-            </div>
-
-            <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+            {/* Charts Section - TIGA CHART SEJAJAR */}
+            <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
               {/* Diagram Gender */}
               <div className="bg-white p-6 shadow-xl rounded-3xl">
                 <h2 className="text-xl font-bold mb-4 text-blue-700">
@@ -424,14 +486,14 @@ const filterData = useCallback(() => {
                 <h2 className="text-xl font-bold mb-4 text-blue-700">
                   Produk Paling Banyak Dibeli
                 </h2>
-                <ResponsiveContainer width="100%" height={320}>
+                <ResponsiveContainer width="100%" height={300}>
                   {topProducts.length === 0 ? (
                     <div className="flex items-center justify-center h-full text-gray-500 italic">
                       Data tidak tersedia
                     </div>
                   ) : (
                     <BarChart
-                      data={topProducts.slice(0, 5)} // 👈 hanya ambil 5 data teratas
+                      data={topProducts.slice(0, 5)}
                       margin={{ top: 20, right: 30, left: 10, bottom: 40 }}
                     >
                       <CartesianGrid strokeDasharray="3 3" />
@@ -471,6 +533,65 @@ const filterData = useCallback(() => {
                       />
                     </BarChart>
                   )}
+                </ResponsiveContainer>
+              </div>
+
+              {/* Grafik Perbandingan Bulanan */}
+              <div className="bg-white p-6 rounded-xl shadow-lg border border-gray-100">
+                <h1 className="text-lg font-semibold mb-4 text-gray-800 flex items-center">
+                  <p className="text-xl font-bold mb-4 text-blue-700">
+                    {""}
+                    Pemasukan Dan Pengeluaran
+                  </p>
+                </h1>
+                <ResponsiveContainer width="100%" height={300}>
+                  <BarChart
+                    data={chartData}
+                    margin={{ top: 10, right: 30, left: 0, bottom: 0 }}
+                  >
+                    <CartesianGrid strokeDasharray="3 3" stroke="#eee" />
+                    <XAxis
+                      dataKey="bulan"
+                      tickFormatter={(value) => {
+                        const [year, month] = value.split("-");
+                        return `${new Date(year, month - 1).toLocaleString(
+                          "id-ID",
+                          { month: "short" }
+                        )}`;
+                      }}
+                    />
+                    <YAxis
+                      tickFormatter={(value) =>
+                        `Rp${(value / 1000000).toFixed(0)}Jt`
+                      }
+                    />
+                    <Tooltip
+                      formatter={(value) => [
+                        `Rp ${Number(value).toLocaleString("id-ID")}`,
+                        "",
+                      ]}
+                      labelFormatter={(label) => {
+                        const [year, month] = label.split("-");
+                        return `${new Date(year, month - 1).toLocaleString(
+                          "id-ID",
+                          { month: "long" }
+                        )} ${year}`;
+                      }}
+                    />
+                    <Legend />
+                    <Bar
+                      dataKey="pemasukan"
+                      name="Pemasukan"
+                      fill="#16a34a"
+                      radius={[4, 4, 0, 0]}
+                    />
+                    <Bar
+                      dataKey="pengeluaran"
+                      name="Pengeluaran"
+                      fill="#dc2626"
+                      radius={[4, 4, 0, 0]}
+                    />
+                  </BarChart>
                 </ResponsiveContainer>
               </div>
             </div>

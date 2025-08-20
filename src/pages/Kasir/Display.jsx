@@ -4,11 +4,11 @@ import { FiPlus, FiMinus } from "react-icons/fi";
 import Checkout from "../Checkout/Pembayaran";
 import { NumericFormat } from "react-number-format";
 
-const ProductCard = ({ product, onAddToCart, url }) => {
+const ProductCard = ({ product, onAddToCart }) => {
   const { namaProduk,kodeProduk, keterangan, image, harga, hpp, jumlah } = product;
   const [count, setCount] = useState(0);
-  const baseURL = "https://revisibe-production.up.railway.app";
-  // const url = "http://localhost:4000"
+  // const baseURL = "https://revisibe-production.up.railway.app";
+   const url = "http://localhost:4000"
 
 
 
