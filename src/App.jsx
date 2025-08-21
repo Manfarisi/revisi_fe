@@ -29,6 +29,7 @@ import ProtectedRoute from "./components/ProtectedRoute/ProtectedRoute";
 import DaftarPelanggan from "./pages/Pelanggan/Pelanggan";
 import ManajemenUser from "./pages/ManajemenUser/ManajemenUser";
 import TransaksiBahanBarang from "./pages/TransaksiBahanBarang/TransaksiBahanBarang";
+import CompanyProfile from "./pages/CompanyProfile/CompanyProfile";
 
 const App = () => {
   // const url = import.meta.env.VITE_API_URL.replace(/\/$/, "");
@@ -51,6 +52,14 @@ const App = () => {
               element={
                 <ProtectedRoute>
                   <Dashboard url={url} />
+                </ProtectedRoute>
+              }
+            />
+             <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <CompanyProfile url={url} />
                 </ProtectedRoute>
               }
             />

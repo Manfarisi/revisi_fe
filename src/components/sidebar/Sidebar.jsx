@@ -9,6 +9,7 @@ import {
   ShoppingBag,
   VibrateIcon,
   UserRoundPlus,
+  UserCircle2Icon,
 } from "lucide-react";
 
 const navItems = [
@@ -16,6 +17,11 @@ const navItems = [
     title: "Dashboard",
     href: "/",
     icon: LayoutDashboard,
+  },
+    {
+    title: "Profile",
+    href: "/profile",
+    icon: UserCircle2Icon,
   },
   {
     title: "Member",

@@ -192,9 +192,6 @@ function LaporanKeuangan({ url }) {
             <p className="text-gray-500 mt-1">Analisis lengkap keuangan bisnis Anda</p>
           </div>
           <div className="flex items-center space-x-4">
-            <button className="flex items-center px-4 py-2 bg-gradient-to-r from-blue-500 to-indigo-500 text-white rounded-lg shadow-md hover:from-blue-600 hover:to-indigo-600 transition-all">
-              <FaFileExport className="mr-2" /> Ekspor Laporan
-            </button>
             <button 
               className="flex items-center px-4 py-2 bg-white border border-gray-200 rounded-lg text-gray-700 hover:bg-gray-50 shadow-sm transition-all"
               onClick={() => setShowFilters(!showFilters)}

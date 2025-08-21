@@ -12,6 +12,7 @@ import {
   BarChart3,
   Users,
   User2,
+  UserRoundCog,
 } from "lucide-react";
 import {
   PieChart,
@@ -410,7 +411,7 @@ const Dashboard = ({ url }) => {
                 {
                   title: "Total User",
                   value: jumlahUser.toLocaleString(), // <-- Tambah ini
-                  icon: User2, // Gunakan icon Users
+                  icon: UserRoundCog, // Gunakan icon Users
                   color: "from-purple-500 to-purple-600",
                 },
                 {
