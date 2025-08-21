@@ -32,8 +32,8 @@ import TransaksiBahanBarang from "./pages/TransaksiBahanBarang/TransaksiBahanBar
 import CompanyProfile from "./pages/CompanyProfile/CompanyProfile";
 
 const App = () => {
-  // const url = import.meta.env.VITE_API_URL.replace(/\/$/, "");
-    const url = "http://localhost:4000"
+   const url = import.meta.env.VITE_API_URL.replace(/\/$/, "");
+    // const url = "http://localhost:4000"
   return (
     <div>
       <ToastContainer />

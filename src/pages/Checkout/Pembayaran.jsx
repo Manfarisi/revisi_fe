@@ -13,8 +13,8 @@ const Checkout = ({ cartItems, setCartItems, onBack }) => {
   const [customerNumber, setCustomerNumber] = useState("");
   const [uangDibayar, setUangDibayar] = useState("");
   const [showDaftarProduk, setShowDaftarProduk] = useState(false);
-  // const url = import.meta.env.VITE_API_URL.replace(/\/$/, "");
-   const url = "http://localhost:4000";
+   const url = import.meta.env.VITE_API_URL.replace(/\/$/, "");
+  //  const url = "http://localhost:4000";
 
   const navigate = useNavigate();
   const kasir = JSON.parse(localStorage.getItem("user"))?.username || "Kasir";
