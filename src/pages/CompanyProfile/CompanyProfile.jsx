@@ -93,7 +93,7 @@ const CompanyProfile = () => {
       <div className="flex flex-col md:flex-row items-center mb-8 p-6 bg-white rounded-lg shadow-md">
         <div className="w-32 h-32 md:mr-6 mb-4 md:mb-0 flex-shrink-0">
           <img
-            src={assets.logo}
+            src={assets.labodine}
             alt="Logo LaBodine"
             className="w-full h-full object-contain rounded-full border-4 border-amber-200 p-2"
           />
