@@ -12,12 +12,20 @@ import circle_check from './circle_check.png'
 import square_minus from './square_minus.png'
 import house_solid from './house_solid.png'
 import labodine from './labodine.jpeg'
+import gambar1 from './gambar1.jpeg'
+import gambar2 from './gambar2.jpeg'
+import gambar3 from './gambar3.jpeg'
+import gambar4 from './gambar4.jpeg'
 
 
 
 export const assets ={
     logo,
     labodine,
+    gambar1,
+    gambar2,
+    gambar3,
+    gambar4,
     add_icon,
     order_icon,
     profile_image,

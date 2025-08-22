@@ -1,4 +1,5 @@
 import React from "react";
+import { assets } from "../../assets/assets";
 
 const companyProfile = {
   nama : "PT. Kreasi Neela Utama",  
@@ -92,7 +93,7 @@ const CompanyProfile = () => {
       <div className="flex flex-col md:flex-row items-center mb-8 p-6 bg-white rounded-lg shadow-md">
         <div className="w-32 h-32 md:mr-6 mb-4 md:mb-0 flex-shrink-0">
           <img
-            src={companyProfile.logo}
+            src={assets.logo}
             alt="Logo LaBodine"
             className="w-full h-full object-contain rounded-full border-4 border-amber-200 p-2"
           />
@@ -196,15 +197,34 @@ const CompanyProfile = () => {
       <div className="mb-8 p-6 bg-white rounded-lg shadow-md">
         <h2 className="text-xl font-semibold text-amber-800 mb-4 pb-2 border-b-2 border-amber-200">Galeri</h2>
         <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
-          {companyProfile.images.map((image, idx) => (
-            <div key={idx} className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+            <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
               <img 
-                src={image} 
-                alt={`Galeri ${idx + 1}`} 
+                src={assets.gambar1} 
+                alt='Gambar 1'
                 className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
               />
             </div>
-          ))}
+             <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+              <img 
+                src={assets.gambar2} 
+                alt='Gambar 2'
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+              />
+            </div>
+             <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+              <img 
+                src={assets.gambar3} 
+                alt='Gambar 3'
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+              />
+            </div>
+             <div className="aspect-square bg-gray-200 rounded-lg overflow-hidden">
+              <img 
+                src={assets.gambar4} 
+                alt='Gambar 4'
+                className="w-full h-full object-cover transition-transform duration-300 hover:scale-110"
+              />
+            </div>
         </div>
       </div>
 
