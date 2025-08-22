@@ -9,17 +9,17 @@ function VerifikasiUser({ url }) {
     getPendingUsers();
   }, []);
 
-  const getPendingUsers = async () => {
-    try {
-      const res = await axios.get(`${url}/api/user/user`);
-      const pending = res.data.filter(
-        (user) => user.kategori === "Pegawai" && user.status === "pending"
-      );
-      setUsers(pending);
-    } catch (err) {
-      console.error("Gagal ambil user", err);
-    }
-  };
+ const getPendingUsers = async () => {
+  try {
+    const res = await axios.get(`${url}/api/user/user`);
+    const pending = res.data.data.filter(
+      (user) => user.kategori === "Pegawai" && user.status === "pending"
+    );
+    setUsers(pending);
+  } catch (err) {
+    console.error("Gagal ambil user", err);
+  }
+};
 
   const handleApprove = async (id) => {
     try {
