@@ -49,7 +49,7 @@ function VerifikasiUser({ url }) {
 
     if (confirm.isConfirmed) {
       try {
-        const res = await axios.delete(`${url}/api/user/user/${id}`);
+        const res = await axios.delete(`${url}/api/user/user-delete/${id}`);
           console.log("Delete response:", res.data);
 
         if (res.data.success) {
