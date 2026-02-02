@@ -58,7 +58,7 @@ npm run dev
 🔗 Backend Repository
 
 This frontend consumes data from the backend API:
-https://github.com/Manfarisi/revisi_be
+https://github.com/Manfarisi/cashier-management-api
 
 
 👨‍💻 Author
