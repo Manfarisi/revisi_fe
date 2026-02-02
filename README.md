@@ -25,7 +25,6 @@ This application focuses on **user interface**, **data visualization**, and **AP
 
 ## 📸 Screenshots
 <img width="1350" height="642" alt="Screenshot (570)" src="https://github.com/user-attachments/assets/8088b289-79e9-4147-b515-aca3e42f0e07" />
-<img width="1366" height="768" alt="Screenshot (569)" src="https://github.com/user-attachments/assets/e2e8cc1d-717f-4428-be28-fdcd0e115dc7" />
 <img width="1348" height="639" alt="Screenshot (568)" src="https://github.com/user-attachments/assets/2b7e2cf2-4463-42a2-8f59-cec50a0820a3" />
 <img width="1343" height="630" alt="Screenshot (567)" src="https://github.com/user-attachments/assets/5e20a547-ed8d-445b-973c-dc86a91153b8" />
 <img width="1346" height="638" alt="Screenshot (574)" src="https://github.com/user-attachments/assets/07757912-c991-49c7-a30b-f881127afd87" />
