@@ -1,18 +1,29 @@
-# 🖥️ Cashier Management Frontend
+# 🧩 Mini ERP Frontend (Inventory & Finance)
 
-Frontend application for a **Cashier & Store Financial Management System**, built using **React**.
-This application focuses on **user interface**, **data visualization**, and **integration with RESTful APIs**.
+Frontend application for a **Mini ERP System** that manages **inventory, products, raw materials, and financial transactions**.
+
+Built using **React**, this application focuses on usability, real-time feedback, and data visualization.
+
+---
+
+## 📌 Overview
+The Mini ERP Frontend provides a dashboard-based interface for managing:
+- Inventory
+- Finance
+- Transactions
+- Reports
 
 ---
 
 ## 🚀 Features
-- Product management (Create, Read, Update, Delete)
-- View product stock and pricing
-- Record store income transactions
-- Record store expense transactions
-- Financial summary dashboard with charts
-- Toast notifications for user actions
-- Responsive and clean UI
+- Secure login & authentication (JWT)
+- Product management (CRUD)
+- Raw material management (CRUD)
+- Stock monitoring
+- Income & expense recording
+- Financial charts & analytics
+- Toast notifications
+- Responsive UI
 
 ---
 
@@ -21,7 +32,22 @@ This application focuses on **user interface**, **data visualization**, and **in
 - Axios
 - Tailwind CSS
 - React Router
-- Chart Library (Chart.js / Recharts)
+- Chart.js
+- React Toastify
+- JWT Authentication
+
+---
+
+## 🔔 Notifications
+User actions such as **create, update, delete**, and **errors** are handled using **toast notifications** for better user experience.
+
+---
+
+## ▶️ Run Locally
+```bash
+npm install
+npm run dev
+```
 
 ---
 
@@ -58,10 +84,10 @@ npm run dev
 🔗 Backend Repository
 
 This frontend consumes data from the backend API:
-https://github.com/Manfarisi/cashier-management-api
+- https://github.com/Manfarisi/mini-erp-inventory-finance-be
 
 
 👨‍💻 Author
 
-Salman Alfarisi
-GitHub: https://github.com/Manfarisi
+- Salman Alfarisi
+- GitHub: https://github.com/Manfarisi
