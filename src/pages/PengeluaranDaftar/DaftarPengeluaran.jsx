@@ -145,7 +145,7 @@ const DaftarPengeluaran = ({ url, onTotalPengeluaranChange }) => {
         {/* Header */}
         <div className="flex justify-between items-center mb-6 flex-wrap gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-red-700">💸 Daftar Pembayaran Toko</h1>
+            <h1 className="text-3xl font-bold text-red-700">💸 Daftar Pengeluaran Toko</h1>
             <p className="text-gray-600"></p>
           </div>
           <button

@@ -173,6 +173,7 @@ const DaftarKeluar = ({ url }) => {
                 {[
                   "Nama Barang",
                   "Jumlah",
+                  "Harga",
                   "Satuan",
                   "Tanggal",
                   "Pegawai",
@@ -201,6 +202,7 @@ const DaftarKeluar = ({ url }) => {
                       {item.nama}
                     </td>
                     <td className="px-5 py-3 text-center text-base">{item.jumlah}</td>
+                    <td className="px-5 py-3 text-center text-base">{item.harga}</td>
                     <td className="px-5 py-3 text-center text-base">
                       <span className="bg-blue-200 text-blue-800 text-xs font-semibold px-3 py-1 rounded-full">
                         {item.satuan}

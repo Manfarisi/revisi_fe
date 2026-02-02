@@ -168,6 +168,8 @@ function Register({ url }) {
             <option value="">-- Pilih Bagian --</option>
             <option value="Gudang">Gudang</option>
             <option value="Keuangan">Keuangan</option>
+            <option value="Produksi">Produksi</option>
+            <option value="Lainnya">Lainnya</option>
           </select>
         </div>
 
